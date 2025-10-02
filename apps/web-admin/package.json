@@ -1,0 +1,10 @@
+{
+  "name": "@drivershub/web-admin",
+  "private": true,
+  "scripts": {
+    "build": "echo 'build web-admin app'",
+    "lint": "echo 'lint web-admin app'",
+    "test": "echo 'test web-admin app'",
+    "docker:build": "docker build -f Dockerfile -t drivershub/web-admin:dev ."
+  }
+}

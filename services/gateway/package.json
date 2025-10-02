@@ -1,0 +1,11 @@
+{
+  "name": "@drivershub/bff-gateway",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'build gateway service'",
+    "lint": "echo 'lint gateway service'",
+    "test": "echo 'test gateway service'",
+    "docker:build": "docker build -f Dockerfile -t drivershub/bff-gateway:dev ."
+  }
+}

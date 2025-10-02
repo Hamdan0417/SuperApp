@@ -1,0 +1,17 @@
+{
+  "name": "drivershub",
+  "private": true,
+  "packageManager": "pnpm@8.15.4",
+  "scripts": {
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "docker:build": "pnpm run -r docker:build",
+    "helm:lint": "pnpm exec helm lint infra/helm/*"
+  },
+  "devDependencies": {
+    "@commitlint/cli": "^18.6.1",
+    "@commitlint/config-conventional": "^18.6.2",
+    "turbo": "^1.10.15"
+  }
+}

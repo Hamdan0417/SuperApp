@@ -1,0 +1,10 @@
+{
+  "name": "@drivershub/web-partner",
+  "private": true,
+  "scripts": {
+    "build": "echo 'build web-partner app'",
+    "lint": "echo 'lint web-partner app'",
+    "test": "echo 'test web-partner app'",
+    "docker:build": "docker build -f Dockerfile -t drivershub/web-partner:dev ."
+  }
+}

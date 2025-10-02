@@ -1,0 +1,11 @@
+{
+  "name": "@drivershub/ui",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "echo 'build shared ui'",
+    "lint": "echo 'lint shared ui'",
+    "test": "echo 'test shared ui'"
+  }
+}
