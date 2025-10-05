@@ -1,0 +1,5 @@
+* @drivershub/engineering-leads
+infra/** @drivershub/devops
+services/** @drivershub/backend
+apps/** @drivershub/frontend
+proto/** @drivershub/platform

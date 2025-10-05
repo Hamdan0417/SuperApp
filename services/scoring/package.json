@@ -1,0 +1,10 @@
+{
+  "name": "@drivershub/scoring-service",
+  "private": true,
+  "scripts": {
+    "build": "echo 'build scoring service'",
+    "lint": "echo 'lint scoring service'",
+    "test": "echo 'test scoring service'",
+    "docker:build": "docker build -f Dockerfile -t drivershub/scoring:dev ."
+  }
+}

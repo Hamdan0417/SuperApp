@@ -1,0 +1,11 @@
+{
+  "name": "@drivershub/drivers-service",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'build drivers service'",
+    "lint": "echo 'lint drivers service'",
+    "test": "echo 'test drivers service'",
+    "docker:build": "docker build -f Dockerfile -t drivershub/drivers:dev ."
+  }
+}

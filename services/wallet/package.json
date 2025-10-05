@@ -1,0 +1,11 @@
+{
+  "name": "@drivershub/wallet-service",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'build wallet service'",
+    "lint": "echo 'lint wallet service'",
+    "test": "echo 'test wallet service'",
+    "docker:build": "docker build -f Dockerfile -t drivershub/wallet:dev ."
+  }
+}

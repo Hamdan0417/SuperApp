@@ -1,0 +1,6 @@
+[project]
+name = "drivershub-scoring"
+version = "0.0.0"
+description = "Scoring service placeholder"
+requires-python = ">=3.12"
+dependencies = []

@@ -1,0 +1,11 @@
+{
+  "name": "@drivershub/partners-service",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'build partners service'",
+    "lint": "echo 'lint partners service'",
+    "test": "echo 'test partners service'",
+    "docker:build": "docker build -f Dockerfile -t drivershub/partners:dev ."
+  }
+}

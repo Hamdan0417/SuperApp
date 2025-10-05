@@ -1,0 +1,205 @@
+version: '3.9'
+services:
+  identity-service:
+    build:
+      context: services/identity
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://identity:identity@identity-db:5432/identity
+      - REDIS_URL=redis://redis:6379/0
+    depends_on:
+      - identity-db
+      - redis
+    command: ["node", "--version"]
+
+  drivers-service:
+    build:
+      context: services/drivers
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://drivers:drivers@drivers-db:5432/drivers
+      - REDIS_URL=redis://redis:6379/1
+      - KAFKA_BROKERS=kafka:9092
+    depends_on:
+      - drivers-db
+      - kafka
+      - redis
+    command: ["node", "--version"]
+
+  partners-service:
+    build:
+      context: services/partners
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://partners:partners@partners-db:5432/partners
+      - REDIS_URL=redis://redis:6379/2
+    depends_on:
+      - partners-db
+      - redis
+    command: ["node", "--version"]
+
+  orders-service:
+    build:
+      context: services/orders
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://orders:orders@orders-db:5432/orders
+      - REDIS_URL=redis://redis:6379/3
+      - KAFKA_BROKERS=kafka:9092
+      - KAFKA_TOPIC_ORDERS_OFFERED=orders.offered
+      - KAFKA_TOPIC_ORDERS_STATUS=orders.status
+    depends_on:
+      - orders-db
+      - kafka
+      - redis
+    command: ["node", "--version"]
+
+  wallet-service:
+    build:
+      context: services/wallet
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+      - DATABASE_URL=postgresql://wallet:wallet@wallet-db:5432/wallet
+      - REDIS_URL=redis://redis:6379/4
+      - KAFKA_TOPIC_PAYOUTS=payouts.created
+    depends_on:
+      - wallet-db
+      - kafka
+      - redis
+    command: ["node", "--version"]
+
+  scoring-service:
+    build:
+      context: services/scoring
+      dockerfile: Dockerfile
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - kafka
+    command: ["python", "--version"]
+
+  web-admin:
+    build:
+      context: apps/web-admin
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+    command: ["node", "--version"]
+
+  web-partner:
+    build:
+      context: apps/web-partner
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+    command: ["node", "--version"]
+
+  driver-mobile:
+    build:
+      context: apps/driver-mobile
+      dockerfile: Dockerfile
+    command: ["flutter", "--version"]
+
+  bff-gateway:
+    build:
+      context: services/gateway
+      dockerfile: Dockerfile
+    environment:
+      - NODE_ENV=development
+    depends_on:
+      - identity-service
+      - orders-service
+      - drivers-service
+      - partners-service
+      - wallet-service
+    command: ["node", "--version"]
+
+  identity-db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=identity
+      - POSTGRES_USER=identity
+      - POSTGRES_PASSWORD=identity
+    ports:
+      - "5433:5432"
+    volumes:
+      - identity-db-data:/var/lib/postgresql/data
+
+  drivers-db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=drivers
+      - POSTGRES_USER=drivers
+      - POSTGRES_PASSWORD=drivers
+    ports:
+      - "5434:5432"
+    volumes:
+      - drivers-db-data:/var/lib/postgresql/data
+
+  partners-db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=partners
+      - POSTGRES_USER=partners
+      - POSTGRES_PASSWORD=partners
+    ports:
+      - "5435:5432"
+    volumes:
+      - partners-db-data:/var/lib/postgresql/data
+
+  orders-db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=orders
+      - POSTGRES_USER=orders
+      - POSTGRES_PASSWORD=orders
+    ports:
+      - "5436:5432"
+    volumes:
+      - orders-db-data:/var/lib/postgresql/data
+
+  wallet-db:
+    image: postgres:15-alpine
+    environment:
+      - POSTGRES_DB=wallet
+      - POSTGRES_USER=wallet
+      - POSTGRES_PASSWORD=wallet
+    ports:
+      - "5437:5432"
+    volumes:
+      - wallet-db-data:/var/lib/postgresql/data
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  kafka:
+    image: bitnami/kafka:3.6
+    environment:
+      - KAFKA_ENABLE_KRAFT=yes
+      - KAFKA_CFG_PROCESS_ROLES=controller,broker
+      - KAFKA_CFG_CONTROLLER_LISTENER_NAMES=CONTROLLER
+      - KAFKA_CFG_LISTENERS=PLAINTEXT://:9092,CONTROLLER://:29093
+      - KAFKA_CFG_ADVERTISED_LISTENERS=PLAINTEXT://kafka:9092
+      - KAFKA_CFG_CONTROLLER_QUORUM_VOTERS=1@kafka:29093
+      - KAFKA_CFG_NODE_ID=1
+      - KAFKA_CFG_AUTO_CREATE_TOPICS_ENABLE=false
+      - KAFKA_CFG_LOG_DIRS=/bitnami/kafka/data
+    ports:
+      - "9092:9092"
+    volumes:
+      - kafka-data:/bitnami/kafka
+
+volumes:
+  identity-db-data:
+  drivers-db-data:
+  partners-db-data:
+  orders-db-data:
+  wallet-db-data:
+  kafka-data:

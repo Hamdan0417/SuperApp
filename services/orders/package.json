@@ -1,0 +1,11 @@
+{
+  "name": "@drivershub/orders-service",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'build orders service'",
+    "lint": "echo 'lint orders service'",
+    "test": "echo 'test orders service'",
+    "docker:build": "docker build -f Dockerfile -t drivershub/orders:dev ."
+  }
+}

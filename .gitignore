@@ -1,0 +1,15 @@
+node_modules/
+.pnpm-store/
+dist/
+build/
+coverage/
+.env*
+.pnp.cjs
+.idea/
+.vscode/
+.DS_Store
+**/tmp/
+**/.turbo/
+**/.terraform/
+**/terraform.tfstate*
+**/.helmfile/

@@ -1,0 +1,11 @@
+{
+  "name": "@drivershub/identity-service",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "echo 'build identity service'",
+    "lint": "echo 'lint identity service'",
+    "test": "echo 'test identity service'",
+    "docker:build": "docker build -f Dockerfile -t drivershub/identity:dev ."
+  }
+}
